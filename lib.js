@@ -1,4 +1,5 @@
 import { check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
 
 const helpers = {
   isUndefined(obj) {
@@ -203,4 +204,8 @@ const formatFleURL = (fileRef, version = 'original', _URIBase = (__meteor_runtim
   return _root + `${fileRef._downloadRoute}/${fileRef._collectionName}/${fileRef._id}/${version}/${fileRef._id}${ext}`;
 };
 
-export { fixJSONParse, fixJSONStringify, formatFleURL, helpers };
+
+const getSession = () => {
+return (Meteor.connection && Meteor.connection._lastSessionId) ? Meteor.connection._lastSessionId : null;
+};
+export { fixJSONParse, fixJSONStringify, formatFleURL, helpers, getSession };

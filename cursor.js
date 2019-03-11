@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { getSession } from "./lib";
 
 /*
  * @private
@@ -45,7 +46,9 @@ export class FileCursor {
   link(version = 'original', URIBase) {
     this._collection._debug(`[FilesCollection] [FileCursor] [link(${version})]`);
     if (this._fileRef) {
-      return this._collection.link(this._fileRef, version, URIBase);
+        const xmtok = getSession();
+        let link = xmtok ? `${this._collection.link(this._fileRef, version, URIBase)}?play=true$xmtok=${xmtok}`:this._collection.link(this._fileRef, version, URIBase);
+      return link;
     }
     return '';
   }
